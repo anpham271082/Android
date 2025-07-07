@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "my_app_android"
 include(":app")
+ 
