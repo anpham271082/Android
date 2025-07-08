@@ -8,9 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import coil.annotation.ExperimentalCoilApi
 import com.example.my_app_android.example_hilt_mvvm.NavigationKeys.Arg.FOOD_CATEGORY_ID
-import com.example.my_app_android.example_hilt_mvvm.view.HiltMVVMFoodCategoriesScreen
-import com.example.my_app_android.example_hilt_mvvm.view.HiltMVVMFoodCategoryDetailsScreen
+import com.example.my_app_android.example_hilt_mvvm.ui.HiltMVVMFoodCategoriesScreen
+import com.example.my_app_android.example_hilt_mvvm.ui.HiltMVVMFoodCategoryDetailsScreen
 import com.example.my_app_android.example_hilt_mvvm.viewmodel.HiltMVVMFoodCategoriesViewModel
 import com.example.my_app_android.example_hilt_mvvm.viewmodel.HiltMVVMFoodCategoryDetailsViewModel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -42,10 +43,12 @@ fun HiltMVVMNavGraph() {
     }
 }
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 private fun FoodCategoriesDestination(navController: NavHostController) {
     val viewModel: HiltMVVMFoodCategoriesViewModel = hiltViewModel()
     HiltMVVMFoodCategoriesScreen(
+        viewModel = viewModel,
         state = viewModel.state,
         effectFlow = viewModel.effects.receiveAsFlow(),
         onNavigationRequested = { itemId ->

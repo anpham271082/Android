@@ -1,4 +1,4 @@
-package com.example.my_app_android.example_hilt_mvvm.view
+package com.example.my_app_android.example_hilt_mvvm.ui
 
 import com.example.my_app_android.example_hilt_mvvm.data.model.HiltMVVMFoodItemModel
 

@@ -4,8 +4,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.my_app_android.example_navigation.screens.ExampleLoginScreen
-import com.example.my_app_android.example_navigation.screens.ExampleSignupScreen
+import com.example.my_app_android.example_navigation.ui.ExampleLoginScreen
+import com.example.my_app_android.example_navigation.ui.ExampleSignupScreen
 
 fun NavGraphBuilder.exampleAuthNavGraph(
     navController: NavHostController

@@ -1,10 +1,13 @@
 package com.example.my_app_android.example_hilt_mvvm.di
 
+import android.content.Context
 import com.example.my_app_android.example_hilt_mvvm.data.api.HiltMVVMFoodApi
 import com.example.my_app_android.example_hilt_mvvm.data.api.HiltMVVMFoodApi.Companion.API_URL
+import com.example.my_app_android.example_hilt_mvvm.data.local.HiltMVVMDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -43,4 +46,9 @@ class HiltMVVMFoodModule {
         return retrofit.create(HiltMVVMFoodApi.Service::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideUserPreferences(@ApplicationContext context: Context): HiltMVVMDataStore {
+        return HiltMVVMDataStore(context)
+    }
 }

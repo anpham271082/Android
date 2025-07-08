@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.my_app_android.example_hilt_mvvm.NavigationKeys
 import com.example.my_app_android.example_hilt_mvvm.data.remote.HiltMVVMFoodRemote
-import com.example.my_app_android.example_hilt_mvvm.view.HiltMVVMFoodCategoryDetailsContract
+import com.example.my_app_android.example_hilt_mvvm.ui.HiltMVVMFoodCategoryDetailsContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.example.my_app_android.example_hilt_mvvm.view
+package com.example.my_app_android.example_hilt_mvvm.ui
 
 import com.example.my_app_android.R
 import androidx.compose.animation.animateContentSize
@@ -21,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -38,6 +39,7 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.my_app_android.example_hilt_mvvm.data.model.HiltMVVMFoodItemModel
+import com.example.my_app_android.example_hilt_mvvm.viewmodel.HiltMVVMFoodCategoriesViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -46,10 +48,13 @@ import kotlinx.coroutines.flow.onEach
 @ExperimentalCoilApi
 @Composable
 fun HiltMVVMFoodCategoriesScreen(
+    viewModel: HiltMVVMFoodCategoriesViewModel,
     state: HiltMVVMFoodCategoriesContract.State,
     effectFlow: Flow<HiltMVVMFoodCategoriesContract.Effect>?,
     onNavigationRequested: (itemId: String) -> Unit
 ) {
+    val darkMode = viewModel.isDarkMode.collectAsState()
+
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
@@ -66,11 +71,30 @@ fun HiltMVVMFoodCategoriesScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }, // Pass the SnackbarHostState here
         topBar = { CategoriesAppBar() },
-    ) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues)) {
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Dark Mode", modifier = Modifier.weight(1f))
+                Switch(
+                    checked = darkMode.value,
+                    onCheckedChange = { viewModel.toggleDarkMode() }
+                )
+            }
+        }
+        Box(modifier = Modifier.padding(PaddingValues(
+            top = innerPadding.calculateTopPadding() + 80.dp,
+            start = 15.dp,
+            end = 15.dp,
+            bottom = 15.dp
+        ))) {
+
             FoodCategoriesList(foodItems = state.categories) { itemId ->
                 onNavigationRequested(itemId)
             }
+
 
             if (state.isLoading) {
                 LoadingBar()
@@ -103,7 +127,7 @@ fun FoodCategoriesList(
     onItemClicked: (id: String) -> Unit = { }
 ) {
     LazyColumn(
-        contentPadding = PaddingValues(bottom = 16.dp)
+        contentPadding = PaddingValues(bottom= 10.dp)
     ) {
         items(foodItems) { item ->
             FoodItemRow(item = item, itemShouldExpand = true, onItemClicked = onItemClicked)

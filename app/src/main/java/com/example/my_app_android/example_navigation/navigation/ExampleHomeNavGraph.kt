@@ -5,8 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.example.my_app_android.example_navigation.screens.ExampleDetailScreen
-import com.example.my_app_android.example_navigation.screens.ExampleHomeScreen
+import com.example.my_app_android.example_navigation.ui.ExampleDetailScreen
+import com.example.my_app_android.example_navigation.ui.ExampleHomeScreen
 
 fun NavGraphBuilder.exampleHomeNavGraph(
     navController: NavHostController

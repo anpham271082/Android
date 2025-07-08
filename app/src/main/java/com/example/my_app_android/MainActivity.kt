@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.my_app_android.example_hilt_mvvm.HiltMVVMNavGraph
 import com.example.my_app_android.example_mvvm2.viewmodel.ExampleMVVM2MainViewModel
+import com.example.my_app_android.example_room_mvvm.ui.RoomMVVMNoteScreen
 import com.example.my_app_android.ui.theme.My_app_androidTheme
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,6 +44,7 @@ class MainActivity : ComponentActivity() {
             }*/
 
             //ExampleMVVM1MainScreen(viewModel)
+
             //ExampleMVVM2MainScreen(modifier = Modifier.padding(0.dp), mainViewModel)
 
             /*My_app_androidTheme {
@@ -56,9 +58,9 @@ class MainActivity : ComponentActivity() {
 
             //ExampleNavigation()
 
+            //HiltMVVMNavGraph()
 
-            HiltMVVMNavGraph()
-
+            RoomMVVMNoteScreen()
 
         }
     }

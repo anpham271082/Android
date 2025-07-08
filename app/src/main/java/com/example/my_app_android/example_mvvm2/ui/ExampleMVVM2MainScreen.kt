@@ -1,4 +1,4 @@
-package com.example.my_app_android.example_mvvm2.view
+package com.example.my_app_android.example_mvvm2.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

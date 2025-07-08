@@ -1,4 +1,4 @@
-package com.example.my_app_android.example_hilt_mvvm.view
+package com.example.my_app_android.example_hilt_mvvm.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

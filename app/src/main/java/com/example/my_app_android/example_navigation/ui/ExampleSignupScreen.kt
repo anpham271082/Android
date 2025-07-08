@@ -1,4 +1,4 @@
-package com.example.my_app_android.example_navigation.screens
+package com.example.my_app_android.example_navigation.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.Box
