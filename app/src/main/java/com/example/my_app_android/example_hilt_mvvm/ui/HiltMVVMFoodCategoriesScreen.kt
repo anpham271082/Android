@@ -69,10 +69,10 @@ fun HiltMVVMFoodCategoriesScreen(
         }?.collect()
     }
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }, // Pass the SnackbarHostState here
-        topBar = { CategoriesAppBar() },
+        //snackbarHost = { SnackbarHost(hostState = snackbarHostState) }, // Pass the SnackbarHostState here
+       // topBar = { CategoriesAppBar() },
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
+        /*Box(modifier = Modifier.padding(innerPadding)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
@@ -83,9 +83,9 @@ fun HiltMVVMFoodCategoriesScreen(
                     onCheckedChange = { viewModel.toggleDarkMode() }
                 )
             }
-        }
+        }*/
         Box(modifier = Modifier.padding(PaddingValues(
-            top = innerPadding.calculateTopPadding() + 80.dp,
+           // top = innerPadding.calculateTopPadding() + 0.dp,
             start = 15.dp,
             end = 15.dp,
             bottom = 15.dp

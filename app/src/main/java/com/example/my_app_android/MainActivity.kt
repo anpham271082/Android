@@ -4,31 +4,36 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import com.example.my_app_android.example_drawer_menu2.DrawerMenu2
+import com.example.my_app_android.example_drawer_menu2.DrawerMenu2MainScreen
 import com.example.my_app_android.example_hilt_mvvm.HiltMVVMNavGraph
 import com.example.my_app_android.example_mvvm2.viewmodel.ExampleMVVM2MainViewModel
-import com.example.my_app_android.example_room_mvvm.ui.RoomMVVMNoteScreen
-import com.example.my_app_android.ui.theme.My_app_androidTheme
 
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     //private val viewModel: ExampleMVVM1MainViewModel by viewModels()
 
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val mainViewModel = ViewModelProvider(this)[ExampleMVVM2MainViewModel::class]
@@ -60,26 +65,16 @@ class MainActivity : ComponentActivity() {
 
             //HiltMVVMNavGraph()
 
-            RoomMVVMNoteScreen()
+            //RoomMVVMNoteScreen()
 
+            //MenuTopBottomBarMainScreen()
+
+
+           //ArgumentsAppNavigation()
+
+            //PopBackStackNavHost()
+
+            DrawerMenu2MainScreen()
         }
     }
 }
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    My_app_androidTheme {
-        Greeting("Android")
-    }
-}
-
-
