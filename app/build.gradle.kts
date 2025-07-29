@@ -98,4 +98,6 @@ dependencies {
 
     implementation(libs.coil.compose)
     implementation(libs.coil.core)
+
+    implementation (libs.accompanist.pager)
 }

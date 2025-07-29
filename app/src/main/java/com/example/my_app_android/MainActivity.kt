@@ -24,6 +24,7 @@ import com.example.my_app_android.example_drawer_menu2.DrawerMenu2
 import com.example.my_app_android.example_drawer_menu2.DrawerMenu2MainScreen
 import com.example.my_app_android.example_hilt_mvvm.HiltMVVMNavGraph
 import com.example.my_app_android.example_mvvm2.viewmodel.ExampleMVVM2MainViewModel
+import com.example.my_app_android.example_slide_image.ExampleSlideImage
 
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -70,11 +71,22 @@ class MainActivity : ComponentActivity() {
             //MenuTopBottomBarMainScreen()
 
 
-           //ArgumentsAppNavigation()
+            //ArgumentsAppNavigation()
 
             //PopBackStackNavHost()
 
-            DrawerMenu2MainScreen()
+            //DrawerMenu2MainScreen()
+
+            ExampleSlideImage(
+                images = listOf(
+                    "https://images.pexels.com/photos/1658967/pexels-photo-1658967.jpeg",
+                    "https://images.pexels.com/photos/2896668/pexels-photo-2896668.jpeg",
+                    "https://images.pexels.com/photos/3598176/pexels-photo-3598176.jpeg",
+                    "https://images.pexels.com/photos/731423/pexels-photo-731423.jpeg",
+                    "https://images.pexels.com/photos/1173777/pexels-photo-1173777.jpeg",
+                    "https://images.pexels.com/photos/1179225/pexels-photo-1179225.jpeg"
+                )
+            )
         }
     }
 }
