@@ -17,12 +17,12 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
 import kotlinx.coroutines.launch
 import coil.compose.AsyncImage
-
 @Composable
 fun SwipeCardStack(
     items: List<String>,
@@ -30,10 +30,9 @@ fun SwipeCardStack(
 ) {
     var cardIndex by remember { mutableStateOf(0) }
     val maxVisibleCards = 3
-
-    val context = LocalContext.current
     val swipeThreshold = 300f
     val coroutineScope = rememberCoroutineScope()
+    val density = LocalDensity.current
 
     if (cardIndex >= items.size) {
         onAllCardsSwiped()
@@ -49,18 +48,23 @@ fun SwipeCardStack(
         for (i in (cardIndex until (cardIndex + maxVisibleCards)).reversed()) {
             if (i >= items.size) continue
 
-            val offsetX = remember { Animatable(0f) }
+            val offsetX = remember(i) { Animatable(0f) }
 
-            val scale = if (i == cardIndex) 1f else 0.95f - (i - cardIndex) * 0.02f
+            val layerIndex = i - cardIndex
+
+            // 3D effect setup
+            val scale = 1f - (layerIndex * 0.03f)
+            val verticalOffset = 16.dp * layerIndex
+            val verticalOffsetPx = with(density) { verticalOffset.toPx() }
+            val cardAlpha = 1f - (layerIndex * 0.1f)
             val rotation = if (i == cardIndex) (offsetX.value / 60).coerceIn(-30f, 30f) else 0f
-            val cardAlpha = if (i == cardIndex) 1f else 0.9f
-
 
             Card(
-                shape = RoundedCornerShape(20.dp),
+                shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
                     .graphicsLayer {
                         translationX = if (i == cardIndex) offsetX.value else 0f
+                        translationY = verticalOffsetPx
                         scaleX = scale
                         scaleY = scale
                         rotationZ = rotation
@@ -81,11 +85,13 @@ fun SwipeCardStack(
                                                 offsetX.snapTo(0f)
                                                 cardIndex++
                                             }
+
                                             offsetX.value < -swipeThreshold -> {
                                                 offsetX.animateTo(-1000f)
                                                 offsetX.snapTo(0f)
                                                 cardIndex++
                                             }
+
                                             else -> {
                                                 offsetX.animateTo(0f, tween(300))
                                             }
@@ -101,12 +107,10 @@ fun SwipeCardStack(
                         }
                     },
                 colors = CardDefaults.cardColors(containerColor = Color.LightGray),
-                elevation = CardDefaults.cardElevation(12.dp)
+                elevation = CardDefaults.cardElevation(6.dp + (layerIndex * 2).dp) // Elevation tăng nhẹ
             ) {
-                // Load image with Coil or basic Painter
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                ) {
+                // Load image
+                Box(modifier = Modifier.fillMaxSize()) {
                     AsyncImage(
                         model = items[i],
                         contentDescription = "Swipe card image",
@@ -114,7 +118,6 @@ fun SwipeCardStack(
                         modifier = Modifier.fillMaxSize()
                     )
 
-                    // Overlay gradient & text
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()

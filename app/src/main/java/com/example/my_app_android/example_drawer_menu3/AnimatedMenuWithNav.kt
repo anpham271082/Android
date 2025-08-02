@@ -87,6 +87,29 @@ fun AnimatedMenuWithNav() {
     ) { if (it == MenuState.EXPANDED) 0.dp else (-240).dp }
 
     Box(Modifier.fillMaxSize()) {
+        // Các lớp layer tạo chiều sâu chỉ khi menu mở
+        if (menuState == MenuState.EXPANDED) {
+            // Layer thứ hai (nằm dưới cùng, lệch nhiều nhất)
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .offset(x = contentOffsetX - 38.dp, y = 36.dp)
+                    .scale(contentScale - 0.1f)
+                    .clip(RoundedCornerShape(cornerRadius))
+                    .background(Color.Gray.copy(alpha = 0.3f))  // tăng alpha
+            )
+            // Layer thứ nhất (nằm trên layer 2, lệch ít hơn)
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .offset(x = contentOffsetX - 18.dp, y = 18.dp)
+                    .scale(contentScale - 0.05f)
+                    .clip(RoundedCornerShape(cornerRadius))
+                    .background(Color.Gray.copy(alpha = 0.4f))  // tăng alpha
+            )
+        }
+
+        // Main content chính
         Box(
             Modifier
                 .fillMaxSize()
@@ -129,7 +152,7 @@ fun AnimatedMenuWithNav() {
             }
         }
 
-        // 2. Overlay nền khi menu mở, để click ngoài menu đóng menu
+        // Overlay nền khi menu mở để click ngoài menu đóng menu
         if (menuState == MenuState.EXPANDED) {
             Box(
                 Modifier
@@ -139,7 +162,7 @@ fun AnimatedMenuWithNav() {
             )
         }
 
-        // 3. Menu bên trái (nằm trên overlay và content khi expanded)
+        // Menu bên trái
         Box(
             Modifier
                 .fillMaxHeight()
@@ -167,10 +190,7 @@ fun AnimatedMenuWithNav() {
                             .fillMaxWidth()
                             .clickable {
                                 navController.navigate(screen.route) {
-                                    // Giữ trạng thái duy nhất, tránh stack nhiều lần
-                                    popUpTo(navController.graph.startDestinationId) {
-                                        inclusive = true
-                                    }
+                                    popUpTo(navController.graph.startDestinationId) { inclusive = true }
                                 }
                                 menuState = MenuState.COLLAPSED
                             }

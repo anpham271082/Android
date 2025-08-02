@@ -100,4 +100,9 @@ dependencies {
     implementation(libs.coil.core)
 
     implementation (libs.accompanist.pager)
+
+    // Accompanist Pager
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
+
 }

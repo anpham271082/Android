@@ -135,8 +135,8 @@ fun ButtonGrid(navController: NavController) {
             AnimatedIconButton("Navigation Arguments", Icons.Default.Share, Color(0xFF003088), Modifier.weight(1f)) {
                 navController.navigate(Screen.ArgumentsAppNavigation.route)
             }
-            AnimatedIconButton("", Icons.Default.Share, Color(0xFF003088), Modifier.weight(1f) .alpha(0f)) {
-                //navController.navigate(Screen.ArgumentsAppNavigation.route)
+            AnimatedIconButton("Page Flip", Icons.Default.Share, Color(0xFF003088), Modifier.weight(1f)) {
+                navController.navigate(Screen.PageFlipScreen.route)
             }
         }
     }

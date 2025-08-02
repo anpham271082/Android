@@ -69,6 +69,8 @@ import com.example.my_app_android.example_mvvm2.ui.ExampleMVVM2MainScreen
 import com.example.my_app_android.example_mvvm2.viewmodel.ExampleMVVM2MainViewModel
 import com.example.my_app_android.example_navigation.ExampleNavigation
 import com.example.my_app_android.example_navigation_arguments.ArgumentsAppNavigation
+import com.example.my_app_android.example_page_curl.PageCurlView
+import com.example.my_app_android.example_page_flip.PageFlipScreen
 import com.example.my_app_android.example_popbackstack.PopBackStackNavHost
 import com.example.my_app_android.example_room_mvvm.ui.RoomMVVMNoteScreen
 import com.example.my_app_android.example_slide_image.ExampleSlideImage
@@ -182,6 +184,9 @@ fun MainNavGraph() {
             composable(Screen.ArgumentsAppNavigation.route) {
                 ArgumentsAppNavigation()
             }
+            composable(Screen.PageFlipScreen.route) {
+                PageFlipScreen()
+            }
         }
     }
 }
@@ -202,4 +207,6 @@ sealed class Screen(val route: String) {
     object ExamplePopBackStack : Screen("example_pop_back_tack")
     object ExampleNavigation : Screen("example_navigation")
     object ArgumentsAppNavigation : Screen("arguments_app_navigation")
+    object PageFlipScreen : Screen("page_flip_screen")
+
 }
