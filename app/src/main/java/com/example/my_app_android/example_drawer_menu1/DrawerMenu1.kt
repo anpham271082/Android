@@ -59,9 +59,8 @@ fun DrawerMenu1() {
     val navController = rememberNavController()
 
     ModalNavigationDrawer(
-
         {
-            ModalDrawerSheet {
+            ModalDrawerSheet{
                 Column {
                     Box(modifier = Modifier.height(100.dp).fillMaxWidth(0.8f).background(color = Purple40)) {
                         Row(
@@ -122,6 +121,7 @@ fun DrawerMenu1() {
         Scaffold(
             topBar = {
                 TopAppBar(
+                    modifier = Modifier.padding(top = 0.dp),
                     title = { Text("Navigation Drawer") },
                     navigationIcon = {
                         IconButton(onClick = {
@@ -131,9 +131,8 @@ fun DrawerMenu1() {
                         }
                     }
                 )
-            }
-        ) { paddingValues ->
-            // Bọc nội dung với padding nếu muốn tránh tràn vào top bar
+            },
+         ) { paddingValues ->
             Box(modifier = Modifier.padding(paddingValues)) {
                 DrawerMenu1AppNavigation(navController)
             }

@@ -30,21 +30,42 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.example.my_app_android.example_navigation.ExampleNavigation
-import com.example.my_app_android.example_navigation_arguments.ArgumentsAppNavigation
 import kotlinx.coroutines.delay
+
+data class GridButton(
+    val text: String,
+    val icon: ImageVector = Icons.Default.Share,
+    val color: Color,
+    val route: String,
+    val visible: Boolean = true
+)
 
 @Composable
 fun ButtonGrid(navController: NavController) {
+    val buttonList = listOf(
+        //GridButton("MVVM 1", color = Color(0xFF4CAF50), route = Screen.ExampleMVVM1.route),
+        //GridButton("MVVM 2", color = Color(0xFF4CAF50), route = Screen.ExampleMVVM2.route),
+        GridButton("MVVM", color = Color(0xFF2196F3), route = Screen.ExampleMVVM3.route),
+        GridButton("Hilt MVVM", color = Color(0xFF2196F3), route = Screen.ExampleHiltMVVM.route),
+        GridButton("Room MVVM", color = Color(0xFF607D8B), route = Screen.ExampleRoomMVVM.route),
+        GridButton("Slide Image", color = Color(0xFF607D8B), route = Screen.ExampleSlideImage.route),
+        GridButton("Swipe Card", color = Color(0xFF9C27B0), route = Screen.ExampleSwipeCard.route),
+        GridButton("Login Register", color = Color(0xFF9C27B0), route = Screen.ExampleLoginRegister.route),
+        //GridButton("Menu 1", color = Color(0xFFF44336), route = Screen.ExampleMenu1.route),
+        //GridButton("Menu 2", color = Color(0xFFF44336), route = Screen.ExampleMenu2.route),
+        GridButton("Menu", color = Color(0xFFFFC107), route = Screen.ExampleMenu3.route),
+        //GridButton("Menu Top Bottom Bar", color = Color(0xFFFFC107), route = Screen.ExampleMenuTopBottomBar.route),
+        //GridButton("PopBackStack", color = Color(0xFF009688), route = Screen.ExamplePopBackStack.route),
+        //GridButton("Navigation", color = Color(0xFF009688), route = Screen.ExampleNavigation.route),
+        //GridButton("Navigation Arguments", color = Color(0xFF003088), route = Screen.ArgumentsAppNavigation.route),
+        GridButton("Page Flip", color = Color(0xFF003088), route = Screen.PageFlipScreen.route),
+        GridButton("Fragmented Image", color = Color(0xAA880088), route = Screen.FragmentedImage.route),
+        GridButton("Hidden", color = Color(0xAA880088), route = Screen.PageFlipScreen.route, visible = false),
+    )
 
-    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,95 +73,29 @@ fun ButtonGrid(navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // ROW 1
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            AnimatedIconButton("MVVM 1", Icons.Default.Share, Color(0xFF4CAF50), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleMVVM1.route)
+        buttonList.chunked(2).forEach { row ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                row.forEach { button ->
+                    AnimatedIconButton(
+                        text = button.text,
+                        icon = button.icon,
+                        color = button.color,
+                        modifier = Modifier
+                            .weight(1f)
+                            .alpha(if (button.visible) 1f else 0f)
+                    ) {
+                        navController.navigate(button.route)
+                    }
+                }
             }
-            AnimatedIconButton("MVVM 2", Icons.Default.Share, Color(0xFF4CAF50), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleMVVM2.route)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // ROW 2
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            AnimatedIconButton("MVVM 3", Icons.Default.Share, Color(0xFF2196F3), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleMVVM3.route)
-            }
-            AnimatedIconButton("Hilt MVVM", Icons.Default.Share, Color(0xFF2196F3), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleHiltMVVM.route)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // ROW 3
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            AnimatedIconButton("Room MVVM", Icons.Default.Share, Color(0xFF607D8B), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleRoomMVVM.route)
-            }
-            AnimatedIconButton("Slide Image", Icons.Default.Share, Color(0xFF607D8B), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleSlideImage.route)
-            }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        // ROW 4
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            AnimatedIconButton("Swipe Card", Icons.Default.Share, Color(0xFF9C27B0), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleSwipeCard.route)
-            }
-            AnimatedIconButton("Login Register", Icons.Default.Share, Color(0xFF9C27B0), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleLoginRegister.route)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-        // ROW 5
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            AnimatedIconButton("Menu 1", Icons.Default.Share, Color(0xFFF44336), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleMenu1.route)
-            }
-            AnimatedIconButton("Menu 2", Icons.Default.Share, Color(0xFFF44336), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleMenu2.route)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-        // ROW 6
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            AnimatedIconButton("Menu 3", Icons.Default.Share, Color(0xFFFFC107), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleMenu3.route)
-            }
-            AnimatedIconButton("Menu Top Bottom Bar", Icons.Default.Share, Color(0xFFFFC107), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleMenuTopBottomBar.route)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-        // ROW 7
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            AnimatedIconButton("PopBackStack", Icons.Default.Share, Color(0xFF009688), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExamplePopBackStack.route)
-            }
-            AnimatedIconButton("Navigation", Icons.Default.Share, Color(0xFF009688), Modifier.weight(1f)) {
-                navController.navigate(Screen.ExampleNavigation.route)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-        // ROW 8
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            AnimatedIconButton("Navigation Arguments", Icons.Default.Share, Color(0xFF003088), Modifier.weight(1f)) {
-                navController.navigate(Screen.ArgumentsAppNavigation.route)
-            }
-            AnimatedIconButton("Page Flip", Icons.Default.Share, Color(0xFF003088), Modifier.weight(1f)) {
-                navController.navigate(Screen.PageFlipScreen.route)
-            }
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
+
 @Composable
 fun AnimatedIconButton(
     text: String,

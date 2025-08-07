@@ -1,0 +1,17 @@
+uniform float2 u_origin;
+uniform float u_time;
+uniform float u_amplitude;
+uniform float u_frequency;
+uniform float u_decay;
+uniform float u_speed;
+
+half4 main(float2 fragCoord) {
+    float2 delta = fragCoord - u_origin;
+    float distance = length(delta);
+
+    float wave = sin(distance * u_frequency - u_time * u_speed);
+    float attenuation = exp(-distance * u_decay);
+    float ripple = wave * attenuation * u_amplitude;
+
+    return half4(ripple, ripple, ripple, 1.0);
+}

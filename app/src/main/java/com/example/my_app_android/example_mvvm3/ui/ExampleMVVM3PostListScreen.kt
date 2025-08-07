@@ -1,4 +1,5 @@
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -6,6 +7,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import com.example.my_app_android.example_mvvm3.data.api.model.ExampleMVVM3PostData
 import com.example.my_app_android.example_mvvm3.viewmodel.ExampleMVVM3PostViewModel
@@ -21,7 +24,13 @@ fun ExampleMVVM3PostListScreen(viewModel: ExampleMVVM3PostViewModel = ExampleMVV
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(paddingValues)
+            modifier =  Modifier
+                .padding(
+                    start = paddingValues.calculateStartPadding(LocalLayoutDirection.current),
+                    end = paddingValues.calculateEndPadding(LocalLayoutDirection.current),
+                    bottom = paddingValues.calculateBottomPadding()
+                )
+                .fillMaxSize()
         ) {
             items(posts) {
                 PostCard(it)

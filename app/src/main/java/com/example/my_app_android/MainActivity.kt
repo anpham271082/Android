@@ -5,61 +5,30 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.my_app_android.example_drawer_menu1.DrawerMenu1
-import com.example.my_app_android.example_drawer_menu2.DrawerMenu2
 import com.example.my_app_android.example_drawer_menu2.DrawerMenu2MainScreen
 import com.example.my_app_android.example_drawer_menu3.AnimatedMenuWithNav
+import com.example.my_app_android.example_fragmented_image.FragmentedImageScreen
 import com.example.my_app_android.example_hilt_mvvm.HiltMVVMNavGraph
 import com.example.my_app_android.example_login_register.ExampleLoginRegisterNavGraph
 import com.example.my_app_android.example_menu_top_bottom_bar.MenuTopBottomBarMainScreen
@@ -69,7 +38,6 @@ import com.example.my_app_android.example_mvvm2.ui.ExampleMVVM2MainScreen
 import com.example.my_app_android.example_mvvm2.viewmodel.ExampleMVVM2MainViewModel
 import com.example.my_app_android.example_navigation.ExampleNavigation
 import com.example.my_app_android.example_navigation_arguments.ArgumentsAppNavigation
-import com.example.my_app_android.example_page_curl.PageCurlView
 import com.example.my_app_android.example_page_flip.PageFlipScreen
 import com.example.my_app_android.example_popbackstack.PopBackStackNavHost
 import com.example.my_app_android.example_room_mvvm.ui.RoomMVVMNoteScreen
@@ -77,15 +45,9 @@ import com.example.my_app_android.example_slide_image.ExampleSlideImage
 import com.example.my_app_android.example_swipe_card.SwipeCardScreen
 
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.getValue
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel: ExampleMVVM1MainViewModel by viewModels()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -94,15 +56,12 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainNavGraph() {
     val navController = rememberNavController()
-
-    val currentBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = currentBackStackEntry?.destination
-    val canNavigateBack = navController.previousBackStackEntry != null
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val canNavigateBack = navBackStackEntry?.destination?.route != Screen.ButtonGridScreen.route
 
     Scaffold(
         topBar = {
@@ -111,10 +70,11 @@ fun MainNavGraph() {
                 navigationIcon = {
                     if (canNavigateBack) {
                         IconButton(onClick = { navController.popBackStack() }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
                         }
-                    } else {
-                        Spacer(modifier = Modifier.width(0.dp))
                     }
                 }
             )
@@ -185,11 +145,16 @@ fun MainNavGraph() {
                 ArgumentsAppNavigation()
             }
             composable(Screen.PageFlipScreen.route) {
-                PageFlipScreen()
+               // PageFlipScreen()
+                SwipeToRevealTableView()
+            }
+            composable(Screen.FragmentedImage.route) {
+                FragmentedImageScreen("https://images.pexels.com/photos/2896668/pexels-photo-2896668.jpeg")
             }
         }
     }
 }
+
 sealed class Screen(val route: String) {
     object ButtonGridScreen : Screen("button_grid")
     object ExampleMVVM1 : Screen("example_mvvm1")
@@ -208,5 +173,6 @@ sealed class Screen(val route: String) {
     object ExampleNavigation : Screen("example_navigation")
     object ArgumentsAppNavigation : Screen("arguments_app_navigation")
     object PageFlipScreen : Screen("page_flip_screen")
+    object FragmentedImage : Screen("fragmented image")
 
 }
