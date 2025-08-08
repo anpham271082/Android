@@ -27,6 +27,10 @@ fun LazyColumnScreen() {
     val swipeStates = remember { mutableStateMapOf<Int, SwipeRowState>() }
     val refreshState = rememberSwipeRefreshState(isRefreshing)
 
+    var refreshKey by remember { mutableStateOf(0) }
+
+    var deleteDialogIndex by remember { mutableStateOf<Int?>(null) }
+
     SwipeRefresh(
         state = refreshState,
         onRefresh = { isRefreshing = true },
@@ -34,9 +38,11 @@ fun LazyColumnScreen() {
             StyleRefreshIndicator(state = state, triggerDp = triggerDp)
         }
     ) {
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 30.dp)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 30.dp)
+        ) {
             /*item {
                 Text(
                     text = "User List",
@@ -45,8 +51,11 @@ fun LazyColumnScreen() {
                 )
             }*/
 
-            itemsIndexed(items, key = { index, _ -> index }) { index, item ->
-                val rowState = swipeStates.getOrPut(index) { SwipeRowState() }
+            itemsIndexed(
+                items,
+                key = { _, item -> "$refreshKey-$item" } // 🔹 key thay đổi khi refresh
+            ) { index, item ->
+                val rowState = swipeStates.getOrPut(item.hashCode()) { SwipeRowState() }
 
                 SwipeableRow(
                     avatarRes = R.drawable.strasbourg,
@@ -55,9 +64,28 @@ fun LazyColumnScreen() {
                     date = "Aug 6, 2025",
                     swipeState = rowState,
                     onEdit = { println("Edit row: $index") },
-                    onDelete = { println("Delete row: $index") }
+                    onDelete = { deleteDialogIndex = index }
                 )
             }
+        }
+    }
+
+    // Dialog Delete
+    if (deleteDialogIndex != null) {
+        val user = items.getOrNull(deleteDialogIndex!!)
+        if (user != null) {
+            DeleteUserDialog(
+                user = user,
+                onDismiss = { deleteDialogIndex = null },
+                onConfirm = {
+                    val removedUser = items[deleteDialogIndex!!]
+                    items = items.toMutableList().also {
+                        it.removeAt(deleteDialogIndex!!)
+                    }
+                    swipeStates.remove(removedUser.hashCode())
+                    deleteDialogIndex = null
+                }
+            )
         }
     }
 
@@ -65,13 +93,44 @@ fun LazyColumnScreen() {
     LaunchedEffect(isRefreshing) {
         if (isRefreshing) {
             delay(2000)
+            // 🔹 Reset lại danh sách ban đầu
+            items = List(20) { i -> "User $i" }
+
+            // 🔹 Xoá hết swipe states để đóng tất cả hàng
+            swipeStates.clear()
+
+            refreshKey++
             isRefreshing = false
         }
     }
 }
 
-
-
-
-
-
+@Composable
+fun DeleteUserDialog(
+    user: String,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(text = "Delete User", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.error)
+        },
+        text = {
+            Text("Are you sure you want to delete \"$user\"? This action cannot be undone.")
+        },
+        confirmButton = {
+            TextButton(
+                onClick = onConfirm
+            ) {
+                Text("Delete", color = MaterialTheme.colorScheme.error)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        },
+        shape = MaterialTheme.shapes.medium
+    )
+}
