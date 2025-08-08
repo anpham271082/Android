@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -134,27 +135,23 @@ fun ImagePickerScreen() {
         Divider(modifier = Modifier.padding(vertical = 16.dp))
 
         Text("All Selected Images Preview:", style = MaterialTheme.typography.titleMedium)
+
+        val allUris by remember {
+            derivedStateOf {
+                listOfNotNull(selectedImageUri) + selectedImageUriList
+            }
+        }
+
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            selectedImageUri?.let { uri ->
-                item(key = uri) {
-                    AnimatedImageCard(
-                        uri = uri,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(220.dp),
-                        onClick = { zoomImageUri = uri }
-                    )
-                }
-            }
-            items(selectedImageUriList, key = { it }) { uri ->
+            itemsIndexed(allUris, key = { index, uri -> "${uri}_${index}" }) { index, uri ->
                 AnimatedImageCard(
                     uri = uri,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(180.dp),
+                        .height(if (uri == selectedImageUri) 220.dp else 180.dp),
                     onClick = { zoomImageUri = uri }
                 )
             }
@@ -169,10 +166,3 @@ fun ImagePickerScreen() {
         )
     }
 }
-
-
-
-
-
-
-
