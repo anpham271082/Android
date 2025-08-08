@@ -1,13 +1,12 @@
 package com.example.my_app_android
 
 import ExampleMVVM3PostListScreen
+import ImagePickerScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.my_app_android.example_Lazy_column.LazyColumnScreen
 import com.example.my_app_android.example_drawer_menu1.DrawerMenu1
 import com.example.my_app_android.example_drawer_menu2.DrawerMenu2MainScreen
 import com.example.my_app_android.example_drawer_menu3.AnimatedMenuWithNav
@@ -144,12 +144,17 @@ fun MainNavGraph() {
             composable(Screen.ArgumentsAppNavigation.route) {
                 ArgumentsAppNavigation()
             }
-            composable(Screen.PageFlipScreen.route) {
-               // PageFlipScreen()
-                SwipeToRevealTableView()
+            composable(Screen.PageFlip.route) {
+                PageFlipScreen()
             }
             composable(Screen.FragmentedImage.route) {
                 FragmentedImageScreen("https://images.pexels.com/photos/2896668/pexels-photo-2896668.jpeg")
+            }
+            composable(Screen.LazyColumn.route) {
+                LazyColumnScreen()
+            }
+            composable(Screen.ImagePicker.route) {
+                ImagePickerScreen()
             }
         }
     }
@@ -172,7 +177,9 @@ sealed class Screen(val route: String) {
     object ExamplePopBackStack : Screen("example_pop_back_tack")
     object ExampleNavigation : Screen("example_navigation")
     object ArgumentsAppNavigation : Screen("arguments_app_navigation")
-    object PageFlipScreen : Screen("page_flip_screen")
+    object PageFlip : Screen("page_flip_screen")
     object FragmentedImage : Screen("fragmented image")
+    object LazyColumn : Screen("lazy column")
+    object ImagePicker : Screen("image picker")
 
 }

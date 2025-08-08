@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.material3)
     implementation(libs.androidx.compose.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -63,6 +64,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.material)
+
+    implementation(libs.accompanist.swiperefresh)
+    implementation(libs.material.icons.core)
+    implementation(libs.material.icons.extended)
+
+    implementation(libs.compose.animation)
 
     implementation(libs.androidx.room)
     ksp(libs.androidx.room.compiler)
