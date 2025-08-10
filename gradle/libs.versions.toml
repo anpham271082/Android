@@ -40,6 +40,9 @@ composeMaterial3 = "1.5.0-rc01"
 
 accompanistPager = "0.36.0"
 
+accompanistNavigation = "0.36.0"
+
+constraintlayout-compose = "1.1.1"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -113,6 +116,9 @@ androidx-compose-material3 = { group = "androidx.wear.compose", name = "compose-
 
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanistPager" }
 accompanist-pager-indicators = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanistPager" }
+accompanist-navigation-animation = { group = "com.google.accompanist", name = "accompanist-navigation-animation", version.ref = "accompanistNavigation" }
+
+constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

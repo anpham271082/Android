@@ -111,5 +111,6 @@ dependencies {
     // Accompanist Pager
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
-
+    implementation(libs.accompanist.navigation.animation)
+    implementation(libs.constraintlayout.compose)
 }

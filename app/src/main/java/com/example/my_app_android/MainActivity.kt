@@ -25,9 +25,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.my_app_android.example_Lazy_column.LazyColumnScreen
-import com.example.my_app_android.example_drawer_menu1.DrawerMenu1
-import com.example.my_app_android.example_drawer_menu2.DrawerMenu2MainScreen
-import com.example.my_app_android.example_drawer_menu3.AnimatedMenuWithNav
+import com.example.my_app_android.example_drawer_menu1.DrawerMenu1Screen
+import com.example.my_app_android.example_drawer_menu2.DrawerMenu2Screen
+import com.example.my_app_android.example_drawer_menu3.DrawerMenu3Screen
 import com.example.my_app_android.example_fragmented_image.FragmentedImageScreen
 import com.example.my_app_android.example_hilt_mvvm.HiltMVVMNavGraph
 import com.example.my_app_android.example_login_register.ExampleLoginRegisterNavGraph
@@ -124,13 +124,13 @@ fun MainNavGraph() {
                 ExampleLoginRegisterNavGraph(paddingValues)
             }
             composable(Screen.ExampleMenu1.route) {
-                DrawerMenu1()
+                DrawerMenu1Screen()
             }
             composable(Screen.ExampleMenu2.route) {
-                DrawerMenu2MainScreen()
+                DrawerMenu2Screen()
             }
             composable(Screen.ExampleMenu3.route) {
-                AnimatedMenuWithNav()
+                DrawerMenu3Screen()
             }
             composable(Screen.ExampleMenuTopBottomBar.route) {
                 MenuTopBottomBarMainScreen()
@@ -155,6 +155,12 @@ fun MainNavGraph() {
             }
             composable(Screen.ImagePicker.route) {
                 ImagePickerScreen()
+            }
+            composable(Screen.BottomBar.route) {
+                BottomBarScreen()
+            }
+            composable(Screen.NavigationFadeSlide.route) {
+                NavigationWithFadeSlide()
             }
         }
     }
@@ -181,5 +187,6 @@ sealed class Screen(val route: String) {
     object FragmentedImage : Screen("fragmented image")
     object LazyColumn : Screen("lazy column")
     object ImagePicker : Screen("image picker")
-
+    object BottomBar : Screen("bottom bar")
+    object NavigationFadeSlide : Screen("navigation fade slide")
 }

@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,12 +18,23 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.PrivacyTip
+import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.filled.Wifi
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -60,7 +72,7 @@ sealed class AppScreen(val route: String, val label: String, val icon: ImageVect
 }
 
 @Composable
-fun AnimatedMenuWithNav() {
+fun DrawerMenu3Screen() {
     val navController = rememberNavController()
     var menuState by remember { mutableStateOf(MenuState.COLLAPSED) }
 
@@ -246,21 +258,83 @@ fun CustomTopBar(
 
 @Composable
 fun HomeScreen() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("🏠 Home", fontSize = 28.sp)
+    val newsList = listOf(
+        "Compose 1.4 Released!",
+        "New Android Studio Arctic Fox Update",
+        "Jetpack Compose Tutorial Series",
+        "Understanding State in Compose",
+        "Material You: What's New?"
+    )
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        items(newsList) { news ->
+            Text(text = "• $news", fontSize = 18.sp)
+        }
     }
 }
 
+// ProfileScreen với thông tin cá nhân + nút Edit
 @Composable
 fun ProfileScreen() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("👤 Profile", fontSize = 28.sp)
+    var isEditing by remember { mutableStateOf(false) }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        Text("👤 Tên: Nguyễn Văn A", fontSize = 22.sp)
+        Text("📧 Email: nguyenvana@example.com", fontSize = 18.sp)
+        Text("📞 SĐT: 0123 456 789", fontSize = 18.sp)
+
+        if (isEditing) {
+            Text("Đang chỉnh sửa thông tin...", fontSize = 16.sp, color = Color.Red)
+            // Bạn có thể thêm TextField để chỉnh sửa ở đây
+        }
+
+        Button(onClick = { isEditing = !isEditing }) {
+            Icon(Icons.Filled.Edit, contentDescription = "Edit")
+            Spacer(Modifier.width(8.dp))
+            Text(if (isEditing) "Lưu" else "Chỉnh sửa")
+        }
     }
 }
 
+// SettingsScreen với danh sách tùy chỉnh có icon
 @Composable
 fun SettingsScreen() {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("⚙️ Settings", fontSize = 28.sp)
+    val settingsItems = listOf(
+        SettingItem("Thông báo", Icons.Filled.Notifications),
+        SettingItem("Quyền riêng tư", Icons.Filled.PrivacyTip),
+        SettingItem("Âm thanh", Icons.Filled.VolumeUp),
+        SettingItem("Wi-Fi", Icons.Filled.Wifi),
+        SettingItem("Bảo mật", Icons.Filled.Security),
+        SettingItem("Giới thiệu", Icons.Filled.Info),
+    )
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        items(settingsItems) { item ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { /* Xử lý click */ }
+                    .padding(vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(item.icon, contentDescription = item.title, tint = Color(0xFF1976D2), modifier = Modifier.size(28.dp))
+                Spacer(Modifier.width(16.dp))
+                Text(item.title, fontSize = 18.sp)
+            }
+        }
     }
 }
+
+data class SettingItem(val title: String, val icon: ImageVector)

@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -50,7 +52,7 @@ import com.example.my_app_android.ui.theme.Purple40
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrawerMenu1() {
+fun DrawerMenu1Screen() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
@@ -60,7 +62,7 @@ fun DrawerMenu1() {
 
     ModalNavigationDrawer(
         {
-            ModalDrawerSheet{
+            ModalDrawerSheet(windowInsets = WindowInsets(0, 0, 0, 0)){
                 Column {
                     Box(modifier = Modifier.height(100.dp).fillMaxWidth(0.8f).background(color = Purple40)) {
                         Row(
@@ -129,7 +131,8 @@ fun DrawerMenu1() {
                         }) {
                             Icon(Icons.Default.Menu, contentDescription = "Menu")
                         }
-                    }
+                    },
+                    windowInsets = WindowInsets(0, 0, 0, 0)
                 )
             },
          ) { paddingValues ->

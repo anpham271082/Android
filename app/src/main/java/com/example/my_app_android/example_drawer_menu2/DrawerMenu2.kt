@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -37,20 +38,23 @@ fun DrawerMenu2(
 ) {
     val scope = rememberCoroutineScope()
 
-    ModalDrawerSheet(modifier.fillMaxSize()) {
+    ModalDrawerSheet(
+        modifier.fillMaxSize(),
+        windowInsets = WindowInsets(0, 0, 0, 0))
+    {
         Column(
             modifier = Modifier
-                .fillMaxHeight()
-                .padding(16.dp)
+                .fillMaxHeight(),
+                //.padding(16.dp)
         ) {
             // Avatar và thông tin user
             Row(
-                modifier = Modifier
-                    .padding(8.dp),
+                //modifier = Modifier
+                //    .padding(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_app_icon), // ảnh trong drawable
+                    painter = painterResource(id = R.drawable.ic_app_icon),
                     contentDescription = "Avatar",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -68,10 +72,10 @@ fun DrawerMenu2(
             Divider(modifier = Modifier.padding(vertical = 12.dp))
 
             val items = listOf(
-                DrawerItem("🏠 Trang chủ", "home"),
-                DrawerItem("📄 Tài liệu", "docs"),
-                DrawerItem("⚙️ Cài đặt", "settings"),
-                DrawerItem("❓ Trợ giúp", "help")
+                NavigationMenuItem("🏠 Trang chủ", "home"),
+                NavigationMenuItem("📄 Tài liệu", "docs"),
+                NavigationMenuItem("⚙️ Cài đặt", "settings"),
+                NavigationMenuItem("❓ Trợ giúp", "help")
             )
 
             items.forEach { item ->
@@ -92,4 +96,4 @@ fun DrawerMenu2(
     }
 }
 
-data class DrawerItem(val title: String, val route: String)
+data class NavigationMenuItem(val title: String, val route: String)

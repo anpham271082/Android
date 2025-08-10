@@ -63,8 +63,10 @@ fun ButtonGrid(navController: NavController) {
         //GridButton("Navigation Arguments", color = Color(0xFF003088), route = Screen.ArgumentsAppNavigation.route),
         GridButton("Page Flip", color = Color(0xFFFFC107), route = Screen.PageFlip.route),
         GridButton("Fragmented Image", color = Color(0xFF003088), route = Screen.FragmentedImage.route),
-        GridButton("LazyColumn", color = Color(0xFF003088), route = Screen.LazyColumn.route),
+        GridButton("Lazy Column", color = Color(0xFF003088), route = Screen.LazyColumn.route),
         GridButton("Image Picker", color = Color(0xFF880088), route = Screen.ImagePicker.route),
+        GridButton("Bottom Bar", color = Color(0xFF880088), route = Screen.BottomBar.route),
+        //GridButton("Navigation With Fade Slide", color = Color(0xFF008811), route = Screen.NavigationFadeSlide.route),
         GridButton("Hidden", color = Color(0xFF880088), route = Screen.PageFlip.route, visible = false),
     )
 
